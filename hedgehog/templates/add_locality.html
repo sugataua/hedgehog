@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block body %}
+	<h2>Додати населений пункт</h2>
+	<form action="" method="post" name="add_locality">
+		{{form.hidden_tag()}}
+		<p>
+			<br>
+			Назва: {{ form.name() }} <br> <br>
+            Тип: {{ form.locality_type() }} <br>
+            Область: {{ form.region() }} <br>
+            Район: {{ form.district() }} <br>
+            Широта: {{ form.coordinate_lat() }}, Довгота: {{ form.coordinate_lon() }} <br>
+
+
+		</p>
+
+			<input type="submit" value="Додати">
+		</p>
+	</form>
+{% endblock %}

@@ -1,0 +1,110 @@
+{% extends "layout.html" %}
+{% block body %}
+<h2 class="section-title">Розклади з автостанцій</h2>
+
+<div class="row">
+    <div class="col-sm-2 col-md-3 col-lg-4">
+    </div>
+    <div class="col-sm-8 col-md-6 col-lg-4">
+        <form action="" name="locality_search" method="POST">
+            {{form.hidden_tag()}}
+            <div class="input-group">
+              {{form.locality_name(class="form-control", placeholder="Населений пункт")}}
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Пошук</button>
+              </span>
+            </div><!-- /input-group -->
+        </form>
+      </div><!-- /.col-lg-6 -->
+    <div class="col-sm-2 col-md-3 col-lg-4">
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+
+<div class="row">
+<h3 style="text-align:center">Популярні населені пункти</h3>
+
+<div class="col-sm-6 col-md-4 col-lg-3">
+<div class="list-group">
+  <a class="list-group-item active">
+    Івано-Франківська область
+  </a>
+    {%  for local in popularLocalities %}
+    <a href="{{ url_for('show_locality', locality_id = local.id) }}" class="list-group-item">{{ local.name }}<span class="badge">{{ local.visit_counter }} візитів</span> </a>
+    {% else %}
+    <a class="list-group-item">Населені пункти відсутні</a>
+    {% endfor %}
+</div>
+</div>
+
+
+<div class="col-sm-6 col-md-4 col-lg-3">
+<div class="list-group">
+  <a class="list-group-item active">
+    Закарпатська область
+  </a>
+    {%  for local in popularLocalities %}
+    <a href="{{ url_for('show_locality', locality_id = local.id) }}" class="list-group-item">{{ local.name }}<span class="badge">{{ local.visit_counter }} візитів</span> </a>
+    {% else %}
+    <a class="list-group-item">Населені пункти відсутні</a>
+    {% endfor %}
+</div>
+</div>
+
+
+<div class="col-sm-6 col-md-4 col-lg-3">
+<div class="list-group">
+  <a class="list-group-item active">
+    Львівська область
+  </a>
+    {%  for local in popularLocalities %}
+    <a href="{{ url_for('show_locality', locality_id = local.id) }}" class="list-group-item">{{ local.name }}<span class="badge">{{ local.visit_counter }} візитів</span> </a>
+    {% else %}
+    <a class="list-group-item">Населені пункти відсутні</a>
+    {% endfor %}
+</div>
+</div>
+
+
+<div class="col-sm-6 col-md-4 col-lg-3">
+<div class="list-group">
+  <a class="list-group-item active">
+    Чернівецька область
+  </a>
+    {%  for local in popularLocalities %}
+    <a href="{{ url_for('show_locality', locality_id = local.id) }}" class="list-group-item">{{ local.name }}<span class="badge">{{ local.visit_counter }} візитів</span> </a>
+    {% else %}
+    <a class="list-group-item">Населені пункти відсутні</a>
+    {% endfor %}
+</div>
+</div>
+
+</div> 	<!-- /row -->
+<div class="row">
+    <h3 style="text-align:center">Нові фото розкладів</h3>
+    <div class="col-md-4 col-xs-6 col-lg-3">
+    <div class="thumbnail">
+        <a href="..." >
+         <img src="http://eurotourist.club/img/forum/7171692191.jpg">
+         </a>
+         <div class="caption">
+            <h4>Рахів</h4>
+            <p>Фото від водія маршрутки на Луги</p>
+             <p><a href="#" class="btn btn-primary" role="button">Переглянути</a> </p>
+         </div>
+         </div>
+    </div>
+</div> <!-- /row -->
+	
+<div class="row">
+	<p class="text-centered">
+	Доступно {{photoCounter}} фото розкладів для {{localitiesCounter}} населених пунктів.
+	</p>
+</div> <!-- /row -->
+
+
+
+	{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block body %}
+
+
+	<form action="{{ url_for('add_photo_schedule') }}" method=post class=add-entry>
+		<dl>
+			<dt>Link to image</dt>
+			<dd><input type=text size=80 name=link></dd>
+			<input type=hidden name=station_id value="{{station_id}}">
+			<dd><input type=submit value=Add></dd>
+		</dl>
+	</form>
+	
+	<ul class=entries>
+	{% for schedule in schedules %}
+		<li>{{schedule.dt_created}}
+		<img src="{{schedule.image_link}}"></img></li>
+	{% else %}
+		<li><em> No schedules so far </em>
+	{% endfor %}
+	</ul>
+	
+{% endblock %}

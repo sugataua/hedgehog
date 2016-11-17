@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block body %}
+
+	<h2> Додати фото розкладу </h2>
+	<form action="{{ url_for('add_photo_timetable') }}" method='POST'>
+		{{form.hidden_tag()}}
+		<p>Автостанція/зупинка: <br> {{ form.station_id()}} <br>  <br> 
+		Посилання на зображення: {{ form.image_url(size=60)}}
+		</p>
+        {{ form.comment() }}
+
+		<!-- <p>Коментар: <br><textarea rows=10 cols=60 name="userComment"> </textarea></p> -->
+		<p><input type=submit /></p>
+	</form>
+	
+{% endblock %}

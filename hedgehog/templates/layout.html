@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Карпати. Розклади з автостанцій</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
+</head>
+<body>
+    <header>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="{{ url_for('show_main_page') }}">
+                <!-- <img alt="Розклади. Головна" src="..."> -->
+                  Головна
+              </a>
+            </div>
+            <div>
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url_for('add_photo_timetable') }}" style="color: blue;">+ Додати розклад</a></li>
+            </ul>
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url_for('show_localities') }}">Населені пункти</a></li>
+                <li><a href="{{ url_for('show_stations') }}">Автостанції</a></li>
+                <li><a href="{{ url_for('about_page') }}">Про сайт</a></li>
+            </ul>
+            </div>
+
+
+            <ul class="nav navbar-nav navbar-right">
+                {% if not session.logged_in %}
+                    <li><a href="{{ url_for('register') }}">Зареєструватися</a></li>
+                    <li><a href="{{ url_for('login') }}">Увійти</a></li>
+                {% else %}
+                   <li><a href="{{ url_for('logout') }}">Вихід</a></li>
+                {% endif %}
+            </ul>
+
+        </div>
+    </nav>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages%}
+                    <div class="{{ category}}"> {{message}} </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </header>
+    <div class="container">
+
+        {% block body %}
+        {% endblock %}
+    </div>
+    <footer class="footer">
+        <div class="container footer-container">
+            <p class="text-muted text-center">&copy; 2016 sugataua</p>
+        </div>
+    </footer>
+</body>	

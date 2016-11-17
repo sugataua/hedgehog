@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block body %}
+	<h2>Додати автостанцію/зупинку</h2>
+	<form action="" method="post" name="add_station">
+		{{form.hidden_tag()}}
+		<p>
+			<br>
+			Населений пункт: {{ form.locality_id() }} <br>
+			Назва: {{ form.name() }} <br>
+		</p>
+
+			<input type="submit" value="Додати">
+		</p>
+	</form>
+{% endblock %}

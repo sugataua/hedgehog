@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block body %}
+
+	<h2> Додати фото розкладу </h2>
+	<form action="{{ url_for('add_photo_schedule') }}" method='POST'>
+		<p>Населений пункт: <br> <input type=text name="townName" size=30  /></p>
+		<p>Посилання на фото розкладу:<br> <input type=text name="imageLink" size=60  /></p>
+		<p>Коментар: <br><textarea rows=10 cols=60 name="userComment"> </textarea></p>
+		<p><input type=submit /></p>
+	</form>
+	
+{% endblock %}

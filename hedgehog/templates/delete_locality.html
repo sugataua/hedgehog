@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block body %}
+	<h2>Видалення населеного пункту</h2>
+
+
+	<form action="" method="post" name="delete_locality">
+		{{form.hidden_tag()}}
+		<p>
+            Ви дійсно впевнені, що хочете видалити населений пункт "{{ locality.name }}" з системи?
+            Автоматично будуть видалені усі автостанції та зупинки, що відносяться до населеного пункту,
+            а також усі розклади по даним автостанціям і зупинкам.
+		</p>
+
+        <button type="submit" class="btn btn-danger">Видалити</button>
+
+		</p>
+	</form>
+{% endblock %}

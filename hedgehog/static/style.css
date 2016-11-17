@@ -1,0 +1,36 @@
+body 		{font-size: 18px;} 
+
+
+h1           { margin: auto; background: url(/static/logo.png) no-repeat center;
+               height: 136px; }
+h2, h3, h4, h5 		{text-align: center}
+h1 span 	{display: none}
+header 	{text-align: center}
+nav		{margin: auto; padding: auto; height: 20px}
+
+/*
+form		{border: 1px solid  #2196f3; text-align: center; background-color: aliceblue}
+.login-form {}
+*/
+
+
+footer 	{text-align: center}
+
+.page 		{ margin: 2em auto; width: 50em; border: 5px solid #ccc;
+				padding: 0.8em; background: white;}
+				
+.user_line	{font-size: 0.8em; padding: 0.3em;
+				margin-bottom: 1em; }
+.user_welcome {display: inline-block; float: left; margin: 2px;}
+.user_links	{display: inline-block; float: right; margin: 2px;}
+		
+.error		{ background: #ffcdd2; padding: 0.5em;
+			border: 1px solid #e53935;}
+
+.warning	{background: #c5cae9; padding: 0.5em;
+			border: 1px solid #3949ab;}
+			
+.success	{background: #c8e6c9; padding: 0.5em;
+			border: 1px solid #43a047;}
+
+.createLink 	{margin: 10px 0; text-align: center}

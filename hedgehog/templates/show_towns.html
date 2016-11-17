@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block body %}
+	<form action="{{ url_for('add_town') }}" method=post class=add-entry>
+		<dl>
+			<dt>Місто</dt> <dd><input type=text name=name>
+			<dd><input type=submit value="Додати">
+		</dl>
+	</form>
+	<ul class=townsList>
+	{% for town in towns %}
+		<li><h2> <a href="{{ url_for('show_towns') }}{{town.name}}">{{town.name}}</a></h2> 
+	{% else %}
+		<li><em> No towns so far </em>
+	{% endfor %}
+	</ul>
+	{% endblock %}

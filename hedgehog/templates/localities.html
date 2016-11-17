@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block body %}
+    {%  if session.logged_in %}
+        <div class="createLink">
+            <a href="{{url_for('add_locality') }}" >+ Додати населений пункт</a>
+        </div>
+    {%  endif %}
+		<h2>Населені пункти</h2>
+
+	{% if localities %}
+		Загальна кількість населених пунктів: {{localities|length}}
+		<br>
+		<br>
+	{% endif %}
+
+    {% for group_region in localities |groupby('region') %}
+        <b>{{ group_region.grouper }} область</b>
+        <ul>
+        {%  for group_district in group_region.list|groupby('district') %}
+            <b>{{ group_district.grouper }} район</b>
+            <ul>
+                {%  for locality in group_district.list %}
+                <li>
+
+                    <a href={{url_for('show_locality', locality_id = locality.id)}}>{{locality.name}}</a>
+
+
+                </li>
+                {%  endfor %}
+            </ul>
+        {%  endfor %}
+        </ul>
+    {% else %}
+		<li><em> Населені пункти відсутні в системі.</em></li>
+    {% endfor %}
+
+
+
+
+	{% if localities %}
+		Загальна кількість населених пунктів: {{localities|length}}
+		<br>
+		<br>
+	{% endif %}
+{% endblock %}

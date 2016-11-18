@@ -77,10 +77,15 @@ def show_main_page():
     photoCounter = len(PhotoTimetable.query.all())
     localitiesPopular = Locality.query.filter_by(deleted=False).filter(Locality.stations.any()).\
         order_by(Locality.visit_counter.desc()).limit(10).all()
+    lastPhotoTimetables = PhotoTimetable.query.all()
 
-    #current_user = User.query.get(session['user_id'])
+    # current_user = User.query.get(session['user_id'])
 
-    return render_template("main_page.html", photoCounter=photoCounter, localitiesCounter = localitiesCounter, popularLocalities = localitiesPopular, form = form)
+    return render_template("main_page.html", photoCounter=photoCounter,
+                localitiesCounter = localitiesCounter,
+                popularLocalities = localitiesPopular,
+                lastPhotos = lastPhotoTimetables,
+                form = form)
 
 
 @app.route('/stations')

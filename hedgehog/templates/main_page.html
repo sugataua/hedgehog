@@ -20,9 +20,6 @@
     </div>
 </div>
 
-<br>
-<br>
-<br>
 
 <div class="row">
 <h3 style="text-align:center">Популярні населені пункти</h3>
@@ -83,21 +80,29 @@
 </div>
 
 </div> 	<!-- /row -->
+
+{%  if lastPhotos %}
 <div class="row">
+
     <h3 style="text-align:center">Нові фото розкладів</h3>
-    <div class="col-md-4 col-xs-6 col-lg-3">
-    <div class="thumbnail">
-        <a href="..." >
-         <img src="http://eurotourist.club/img/forum/7171692191.jpg">
-         </a>
-         <div class="caption">
-            <h4>Рахів</h4>
-            <p>Фото від водія маршрутки на Луги</p>
-             <p><a href="#" class="btn btn-primary" role="button">Переглянути</a> </p>
-         </div>
-         </div>
-    </div>
+
+    {%  for photo in lastPhotos %}
+        <div class="col-md-4 col-xs-6 col-lg-3">
+            <div class="thumbnail">
+                <a href="{{ photo.url_img_link }}" >
+                    <img src="{{ photo.url_img_link }}">
+                </a>
+                <div class="caption">
+                    <h4>{{ photo.station }}</h4>
+                    <p>{{ photo.author_comment }}</p>
+                     <p><a href="#" class="btn btn-primary" role="button">Переглянути</a> </p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
 </div> <!-- /row -->
+{% endif %}
 	
 <div class="row">
 	<p class="text-centered">

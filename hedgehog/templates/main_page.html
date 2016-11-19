@@ -95,7 +95,7 @@
                 <div class="caption">
                     <h4><b>{{ locality.name}}</b></h4>
                     <p>{{ photo.author_comment | truncate(30, True)}}</p>
-                     <p><a href="#" class="btn btn-primary" role="button">Переглянути</a> </p>
+                     <p><a href="{{ url_for('show_locality', locality_id = locality.id) }}" class="btn btn-primary" role="button">Переглянути</a> </p>
                 </div>
             </div>
         </div>

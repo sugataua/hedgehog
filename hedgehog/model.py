@@ -4,7 +4,7 @@ MODE_TRAIN = 1
 TYPE_STOP = 0
 TYPE_STATION = 1
 
-
+import datetime
 from hedgehog import app
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -17,7 +17,7 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True)    
     email = db.Column(db.String(254), unique=True)
     pwd_hash = db.Column(db.String(256))
-    
+
     def __init__(self, username, email, password):
         self.username = username
         self.email = email
@@ -44,9 +44,10 @@ class Locality(db.Model):
     coordinate_lon = db.Column(db.Float)
     
     deleted = db.Column(db.Boolean, default=False)
-        
-    stations = db.relationship('Station', backref='locality',
-                                lazy='dynamic')
+
+
+    stations = db.relationship('Station', backref='locality', lazy='dynamic')
+
     """
     def __init__(self, name):
         self.name = name
@@ -75,6 +76,7 @@ class Locality(db.Model):
             station.delete()
         db.session.commit()
 
+
 class Station(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Unicode(256), default="зупинка")
@@ -92,7 +94,8 @@ class Station(db.Model):
     
     deleted = db.Column(db.Boolean, default=False)
         
-    locality_id = db.Column(db.Integer, db.ForeignKey('locality.id'))    
+    locality_id = db.Column(db.Integer, db.ForeignKey('locality.id'))
+    #locality = db.relation(Locality, backref="ref_stations")
     photo_timetables = db.relationship('PhotoTimetable', backref="on_station", lazy='dynamic')
 
     
@@ -112,18 +115,32 @@ class Station(db.Model):
         
 class PhotoTimetable(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    station = db.Column(db.Integer, db.ForeignKey('station.id'))    
+    station_id = db.Column(db.Integer, db.ForeignKey('station.id'))
     url_img_link = db.Column(db.String(256))
     author_comment = db.Column(db.Text)
-        
+
+    created_dt = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    edited_dt = db.Column(db.DateTime)
+    deleted_dt = db.Column(db.DateTime)
+
+    """
+    TODO: relationship between User and his photo_timetables
+    created_by = db.Column(db.Integer, db.ForeignKey('user.id'))
+    edited_by = db.Column(db.Integer, db.ForeignKey('user.id'))
+    deleted_by = db.Column(db.Integer, db.ForeignKey('user.id'))
+    """
+
     deleted = db.Column(db.Boolean, default=False)
+
+    station = db.relation(Station, backref="ref_photo_timetables")
+
     
     def __init__(self, station, url_img_link):        
-        self.station = station
+        self.station_id = station
         self.url_img_link = url_img_link
         
     def __init__(self, station, url_img_link, comment):        
-        self.station = station
+        self.station_id = station
         self.url_img_link = url_img_link
         self.author_comment = comment
 
@@ -132,10 +149,10 @@ class PhotoTimetable(db.Model):
 
     def delete(self):
         self.deleted = True
+        self.deleted_dt = datetime.datetime.utcnow()
         db.session.commit()
-    
+
+
 class Comments(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text)
-    
-    

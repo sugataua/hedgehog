@@ -1,11 +1,27 @@
 {% extends "layout.html" %}
 {% block body %}
 
-	<ul class=entries>
+	<table class="table ">
+	<caption>Перелік зупинок</caption>
+	<thead>
+	    <tr>
+	        <th>#</th>
+	        <th>Name</th>
+	        <th>Coordinate</th>
+        </tr>
+    </thead>
+    <tbody>
 	{% for station in stations %}
-		<li><h2> {{station.name}}</h2> 
+	    <tr>
+	    <td>{{ loop.index }}</td>
+		<td>{{station.name}}</td>
+		<td>{{station.coordinate_lat}},{{station.coordinate_lon}}</td>
+		</tr>
 	{% else %}
-		<li><em> No station so far </em>
+	    <tr>
+		Зупинки в системі відсутні
+		</tr>
 	{% endfor %}
-	</ul>
-	{% endblock %}
+	</tbody>
+	</table>
+{% endblock %}

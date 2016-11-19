@@ -77,13 +77,62 @@ def show_main_page():
     photoCounter = len(PhotoTimetable.query.all())
     localitiesPopular = Locality.query.filter_by(deleted=False).filter(Locality.stations.any()).\
         order_by(Locality.visit_counter.desc()).limit(10).all()
-    lastPhotoTimetables = PhotoTimetable.query.all()
-
+    #lastPhotoTimetables = PhotoTimetable.query.filter_by(deleted=False).order_by(PhotoTimetable.created_dt.desc()).limit(3)
+    lastPhotoTimetables = db.session.query(Locality, Station, PhotoTimetable)\
+        .join(Station).join(PhotoTimetable)\
+        .order_by(PhotoTimetable.created_dt.desc()).limit(3).all()
     # current_user = User.query.get(session['user_id'])
+
+
+    from sqlalchemy import func
+    p_localities_if = db.session.query(Locality.name, Locality.id,
+                                       func.count(PhotoTimetable.id).label("counted"))\
+        .filter_by(region='Івано-Франківська', deleted=False)\
+        .join(Station)\
+        .join(PhotoTimetable)\
+        .group_by(Locality.id)\
+        .order_by(Locality.visit_counter.desc())\
+        .limit(5)\
+        .all()
+
+    """
+    p_localities_if = Locality.query.filter_by(deleted=False).filter(Locality.stations.any()).\
+        filter_by(region='Івано-Франківська').order_by(Locality.visit_counter.desc()).limit(5).all()
+    """
+    p_localities_ch = db.session.query(Locality.name, Locality.id,
+                                       func.count(PhotoTimetable.id).label("counted"))\
+        .filter_by(region='Чернівецька', deleted=False)\
+        .join(Station)\
+        .join(PhotoTimetable)\
+        .group_by(Locality.id)\
+        .order_by(Locality.visit_counter.desc())\
+        .limit(5)\
+        .all()
+    p_localities_zk = db.session.query(Locality.name, Locality.id,
+                                       func.count(PhotoTimetable.id).label("counted"))\
+        .filter_by(region='Закарпатська', deleted=False)\
+        .join(Station)\
+        .join(PhotoTimetable)\
+        .group_by(Locality.id)\
+        .order_by(Locality.visit_counter.desc())\
+        .limit(5)\
+        .all()
+    p_localities_lv = db.session.query(Locality.name, Locality.id,
+                                       func.count(PhotoTimetable.id).label("counted"))\
+        .filter_by(region='Львівська', deleted=False)\
+        .join(Station)\
+        .join(PhotoTimetable)\
+        .group_by(Locality.id)\
+        .order_by(Locality.visit_counter.desc())\
+        .limit(5)\
+        .all()
 
     return render_template("main_page.html", photoCounter=photoCounter,
                 localitiesCounter = localitiesCounter,
-                popularLocalities = localitiesPopular,
+                p_localities_if = p_localities_if,
+                p_localities_ch = p_localities_ch,
+                p_localities_zk = p_localities_zk,
+                p_localities_lv = p_localities_lv,
                 lastPhotos = lastPhotoTimetables,
                 form = form)
 

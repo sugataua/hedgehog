@@ -6,7 +6,7 @@ h1           { margin: auto; background: url(/static/logo.png) no-repeat center;
 h2, h3, h4, h5 		{text-align: center}
 h1 span 	{display: none}
 header 	{text-align: center}
-nav		{margin: auto; padding: auto; height: 20px}
+/*nav		{margin: auto; padding: auto; height: 20px}*/
 
 /*
 form		{border: 1px solid  #2196f3; text-align: center; background-color: aliceblue}

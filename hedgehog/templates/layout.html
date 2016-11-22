@@ -35,8 +35,6 @@
             </ul>
             <ul class="nav navbar-nav">
                 <li><a href="{{ url_for('show_localities') }}">Населені пункти</a></li>
-                <li><a href="{{ url_for('show_stations') }}">Автостанції</a></li>
-                <li><a href="#">Розклади</a></li>
                 <li><a href="{{ url_for('about_page') }}">Про сайт</a></li>
             </ul>
 
@@ -69,9 +67,11 @@
         {% block body %}
         {% endblock %}
     </div>
-    <footer class="footer">
-        <div class="container footer-container">
-            <p class="text-muted text-center">&copy; 2016 sugataua</p>
-        </div>
-    </footer>
+    <div class="container">
+        <footer class="footer">
+            <div class="container footer-container">
+                <p class="text-muted text-center">&copy; 2016 sugataua</p>
+            </div>
+        </footer>
+    </div>
 </body>	

@@ -1,9 +1,9 @@
 body 		{font-size: 18px;} 
 
 
-h1           { margin: auto; background: url(/static/logo.png) no-repeat center;
-               height: 136px; }
-h2, h3, h4, h5 		{text-align: center}
+h1           { margin: auto; }
+
+/* h2, h3, h4, h5 		{text-align: center} */
 h1 span 	{display: none}
 header 	{text-align: center}
 /*nav		{margin: auto; padding: auto; height: 20px}*/

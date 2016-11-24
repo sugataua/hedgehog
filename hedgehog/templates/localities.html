@@ -1,12 +1,26 @@
 {% extends "layout.html" %}
 {% block body %}
+    {# TO DO #}
     {%  if session.logged_in %}
         <div class="createLink">
             <a href="{{url_for('add_locality') }}" >+ Додати населений пункт</a>
         </div>
     {%  endif %}
-		<h2>Населені пункти</h2>
+    {# /TO DO #}
 
+    <div class="page-header">
+        <h1>Населені пункти <small>Карпатських областей</small></h1>
+    </div>
+
+    <div class="well">
+        <ul>
+            {% for group_region in localities |groupby('region') %}
+            <li><a href="#region-group-{{ loop.index }}">{{ group_region.grouper }} область</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+
+<hr>
 	{% if localities %}
 		Загальна кількість населених пунктів: {{localities|length}}
 		<br>
@@ -14,24 +28,34 @@
 	{% endif %}
 
     {% for group_region in localities |groupby('region') %}
-        <b>{{ group_region.grouper }} область</b>
-        <ul>
-        {%  for group_district in group_region.list|groupby('district') %}
-            <b>{{ group_district.grouper }} район</b>
-            <ul>
-                {%  for locality in group_district.list %}
-                <li>
+        <h3 id="region-group-{{ loop.index }}">{{ group_region.grouper }} область</h3>
+        <table class="table table-striped" id="localities_zakarpatta">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Назва</th>
+                    <th>Район</th>
+                    <th>Кількість зупинок</th>
+                    <th>Кількість фото розкладів</th>
+                </tr>
+            </thead>
+            <tbody>
 
-                    <a href={{url_for('show_locality', locality_id = locality.id)}}>{{locality.name}}</a>
+            {%  for locality in group_region.list %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td><a href={{url_for('show_locality', locality_id = locality.id)}}>{{locality.name}}</a></td>
+                    <td>{{ locality.district }} район</td>
+                    <td>0</td>
+                    <td>-</td>
+                </tr>
+            {%  endfor %}
 
+            </tbody>
+        </table>
 
-                </li>
-                {%  endfor %}
-            </ul>
-        {%  endfor %}
-        </ul>
     {% else %}
-		<li><em> Населені пункти відсутні в системі.</em></li>
+		<h4>Населені пункти відсутні в системі.</h4>
     {% endfor %}
 
 

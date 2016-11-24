@@ -54,13 +54,8 @@ class Locality(db.Model):
     """
 
 
-    def __init__(self, name = None, locality_type = None, region = None, district = None, lat = None, lon = None):
+    def __init__(self, name):
         self.name = name
-        self.locality_type = locality_type
-        self.district = district
-        self.region = region
-        self.coordinate_lat = float(lat)
-        self.coordinate_lon = float(lon)
 
         
     def __repr__(self):

@@ -292,7 +292,8 @@ def edit_locality(locality_id):
     if request.method == 'POST' and form.validate_on_submit():
         form.populate_obj(locality)
         locality.save()
-    print(form.region.data)
+        return redirect(url_for("show_locality",locality_id=locality.id))
+    #print(form.region.data)
     return render_template('add_locality.html', form = form)
 
 

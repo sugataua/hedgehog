@@ -37,8 +37,8 @@ class LocalityCreateForm(FlaskForm):
                                          ('м', 'місто')],
                                 validators=[DataRequired()])
 
-    coordinate_lat = DecimalField('lat',validators=[DataRequired()])
-    coordinate_lon = DecimalField('lon', validators=[DataRequired()])
+    coordinate_lat = DecimalField('coordinate_lat',validators=[DataRequired()])
+    coordinate_lon = DecimalField('coordinate_lon', validators=[DataRequired()])
 
 
 class LocalityEditForm(FlaskForm):

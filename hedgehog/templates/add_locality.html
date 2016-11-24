@@ -1,20 +1,38 @@
 {% extends "layout.html" %}
 {% block body %}
+
+<div class="col-md-4 col-md-offset-4">
 	<h2>Додати населений пункт</h2>
 	<form action="" method="post" name="add_locality">
 		{{form.hidden_tag()}}
-		<p>
-			<br>
-			Назва: {{ form.name() }} <br> <br>
-            Тип: {{ form.locality_type() }} <br>
-            Область: {{ form.region() }} <br>
-            Район: {{ form.district() }} <br>
-            Широта: {{ form.coordinate_lat() }}, Довгота: {{ form.coordinate_lon() }} <br>
+        <div class="form-group {% if form.name.errors %} has-error {% endif %}">
+        <label class="control-label" for="name">Назва:</label>
+        {{ form.name(class="form-control") }}
+        </div>
 
+        <div class="form-group {% if form.locality_type.errors %} has-error {% endif %}">
+        <label class="control-label" for="name">Тип:</label>
+        {{ form.locality_type(class="form-control") }}
+        </div>
 
-		</p>
+        <div class="form-group {% if form.region.errors %} has-error {% endif %}">
+        <label class="control-label" for="region">Область:</label>
+        {{ form.region(class="form-control") }}
+        </div>
 
-			<input type="submit" value="Додати">
-		</p>
+        <div class="form-group {% if form.district.errors %} has-error {% endif %}">
+        <label class="control-label" for="district">Район:</label>
+        {{ form.district(class="form-control") }}
+        </div>
+        <div class="form-group {% if form.coordinate_lat.errors or form.coordinate_lon.errors %} has-error {% endif %}">
+        <label class="control-label" for="lat">Широта і довгота:</label>
+        {{ form.coordinate_lat(class="form-control", size=5) }}
+        {{ form.coordinate_lon(class="form-control") }}
+        </div>
+
+        <div class="col-md-4 col-md-offset-4">
+            <button type="submit" class="btn btn-default">Зберегти</button>
+        </div>
 	</form>
+</div>
 {% endblock %}

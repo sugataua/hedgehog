@@ -1,9 +1,10 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed, FileRequired
-from wtforms import TextField, PasswordField, SelectField, StringField, DecimalField
+from wtforms import TextField, PasswordField, SelectField, StringField, DecimalField, RadioField,BooleanField
 from wtforms.fields.html5 import EmailField 
 from wtforms.validators import Required, DataRequired
 from wtforms.widgets import TextArea
+from hedgehog.model import MODE_BUS, MODE_TRAIN, TYPE_STOP, TYPE_STATION
 
 
 class RegisterForm(FlaskForm):
@@ -50,8 +51,19 @@ class LocalityDeleteForm(FlaskForm):
 
     
 class StationCreateForm(FlaskForm):
-    name = StringField('name', validators=[Required()])
-    locality_id = SelectField('locality', coerce=int)
+    name = StringField('Назва', validators=[Required()])
+    locality_id = SelectField('Населений пункт', coerce=int)
+    transport_mode = RadioField('Вид транспорту',
+                                choices=[(MODE_BUS,'Автобус'),
+                                         (MODE_TRAIN,'Залізниця')],
+                                default=MODE_BUS,
+                                coerce=int)
+    station_type = RadioField('Тип',
+                                choices=[(TYPE_STOP,'Зупинка'),
+                                         (TYPE_STATION,'Станція')],
+                                default=TYPE_STOP,
+                                coerce=int)
+    luggage_storage = BooleanField('Камери схову багажу')
     
     
 class PhotoTimetableAddForm(FlaskForm):

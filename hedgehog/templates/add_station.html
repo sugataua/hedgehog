@@ -1,15 +1,60 @@
 {% extends "layout.html" %}
 {% block body %}
-	<h2>Додати автостанцію/зупинку</h2>
+<div class="col-md-4 col-md-offset-4">
+	<h2>Додати зупинку</h2>
 	<form action="" method="post" name="add_station">
 		{{form.hidden_tag()}}
-		<p>
-			<br>
-			Населений пункт: {{ form.locality_id() }} <br>
-			Назва: {{ form.name() }} <br>
-		</p>
+        <div class="form-group {% if form.name.errors %} has-error {% endif %}">
+        <label class="control-label" for="name">{{ form.name.label}}:</label>
+        {{ form.name(class="form-control") }}
+        </div>
 
-			<input type="submit" value="Додати">
-		</p>
+        <div class="form-group {% if form.locality_id.errors %} has-error {% endif %}">
+        <label class="control-label" for="locality_id">{{ form.locality_id.label}}:
+        {{ form.locality_id(class="form-control") }}
+        </label>
+        </div>
+
+
+        <div class="form-group {% if form.transport_mode.errors %} has-error {% endif %}">
+        <label class="control-label" for="transport_mode">
+
+            {{ form.transport_mode.label }}:
+        </label>
+
+        {% for subfield in form.transport_mode %}
+            <div class="radio">
+                <label>{{ subfield }} {{ subfield.label }}</label>
+            </div>
+        {% endfor %}
+        </div>
+
+        <div class="form-group {% if form.station_type.errors %} has-error {% endif %}">
+        <label class="control-label" for="station_type">
+
+            {{ form.station_type.label }}:
+        </label>
+
+        {% for subfield in form.station_type %}
+            <div class="radio">
+                <label>{{ subfield }} {{ subfield.label }}</label>
+            </div>
+        {% endfor %}
+        </div>
+
+        <h4><b>Зручності станції:</b></h4>
+        <div class="form-group {% if form.luggage_storage.errors %} has-error {% endif %}">
+        <div class="checkbox">
+        <label class="control-label" for="luggage_storage">
+            {{ form.luggage_storage() }}
+            {{ form.luggage_storage.label}}
+        </label>
+        </div>
+        </div>
+
+        <div class="col-md-4 col-md-offset-4">
+            <button type="submit" class="btn btn-default">Зберегти</button>
+        </div>
 	</form>
+</div>
 {% endblock %}

@@ -198,11 +198,27 @@ def show_station(station_id):
 
 """
 
-"""    
-@app.route('/station/<station_code>/edit')
-def show_station_page_edit(station_code):
-    return "Page for station " + station_code
-"""
+
+@app.route('/stations/<station_id>/edit')
+def edit_station(station_id):
+    try:
+        station = Station.query.get(station_id)
+        if station is None or station.deleted:
+            abort(404)
+    except OverflowError:
+        abort(404)
+
+    form = StationCreateForm(obj=station)
+    if request.method == 'POST' and form.validate_on_submit():
+        form.populate_obj(station)
+        station.save()
+        return redirect(url_for("show_locality",locality_id=station.locality_id))
+    #print(form.region.data)
+    return render_template('add_station.html', form = form)
+
+
+
+
 """
 @app.route('/photo_schedules/add', methods=['GET','POST'])
 def add_photo_schedule():

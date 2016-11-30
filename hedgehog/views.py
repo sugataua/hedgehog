@@ -199,7 +199,7 @@ def show_station(station_id):
 """
 
 
-@app.route('/stations/<station_id>/edit')
+@app.route('/stations/<station_id>/edit', methods=['GET','POST'])
 def edit_station(station_id):
     try:
         station = Station.query.get(station_id)
@@ -209,6 +209,10 @@ def edit_station(station_id):
         abort(404)
 
     form = StationCreateForm(obj=station)
+
+    localities = Locality.query.filter_by(deleted=False).all()
+    form.locality_id.choices = [(local.id, local.name) for local in Locality.query.order_by('name').all()]
+
     if request.method == 'POST' and form.validate_on_submit():
         form.populate_obj(station)
         station.save()

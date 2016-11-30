@@ -101,6 +101,11 @@ class Station(db.Model):
     def __repr__(self):
         return '<Station %r>' % self.name
 
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
     def delete(self):
         self.deleted = True
         for pt in self.photo_timetables:

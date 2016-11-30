@@ -42,12 +42,43 @@
         {% endfor %}
         </div>
 
+
+        <div class="form-group {% if form.address.errors %} has-error {% endif %}">
+        <label class="control-label" for="locality_id">{{ form.address.label}}:
+        {{ form.address(size=50,class="form-control") }}
+        </label>
+        </div>
+
+        <div class="form-group {% if form.phone_number.errors %} has-error {% endif %}">
+        <label class="control-label" for="locality_id">{{ form.phone_number.label}}:
+        {{ form.phone_number(size=32, class="form-control") }}
+        </label>
+        </div>
+
         <h4><b>Зручності станції:</b></h4>
         <div class="form-group {% if form.luggage_storage.errors %} has-error {% endif %}">
         <div class="checkbox">
         <label class="control-label" for="luggage_storage">
             {{ form.luggage_storage() }}
             {{ form.luggage_storage.label}}
+        </label>
+        </div>
+        </div>
+
+        <div class="form-group {% if form.toilet.errors %} has-error {% endif %}">
+        <div class="checkbox">
+        <label class="control-label" for="toilet">
+            {{ form.toilet() }}
+            {{ form.toilet.label}}
+        </label>
+        </div>
+        </div>
+
+        <div class="form-group {% if form.ticket_office.errors %} has-error {% endif %}">
+        <div class="checkbox">
+        <label class="control-label" for="ticket_office">
+            {{ form.ticket_office() }}
+            {{ form.ticket_office.label}}
         </label>
         </div>
         </div>

@@ -51,8 +51,8 @@ class LocalityDeleteForm(FlaskForm):
 
     
 class StationCreateForm(FlaskForm):
-    name = StringField('Назва', validators=[Required()])
-    locality_id = SelectField('Населений пункт', coerce=int)
+    name = StringField('Назва', validators=[DataRequired()])
+    locality_id = SelectField('Населений пункт', coerce=int, validators=[DataRequired()])
     transport_mode = RadioField('Вид транспорту',
                                 choices=[(MODE_BUS,'Автобус'),
                                          (MODE_TRAIN,'Залізниця')],
@@ -64,6 +64,11 @@ class StationCreateForm(FlaskForm):
                                 default=TYPE_STOP,
                                 coerce=int)
     luggage_storage = BooleanField('Камери схову багажу')
+    toilet = BooleanField('Туалет')
+    ticket_office = BooleanField('Квиткові каси')
+
+    address = StringField('Адреса')
+    phone_number = StringField('Номер телефону')
     
     
 class PhotoTimetableAddForm(FlaskForm):

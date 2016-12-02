@@ -280,7 +280,7 @@ def add_locality():
             flash('Населений пункт "' + form.name.data + '" додано', 'success')
         else:
             flash('Населений пункт вже є в системі', 'error')
-    return render_template('add_locality.html', form = form)
+    return render_template('add_locality.html', form = form, locality_id = None)
 
 
 @app.route('/localities/<int:locality_id>')
@@ -314,7 +314,7 @@ def edit_locality(locality_id):
         locality.save()
         return redirect(url_for("show_locality",locality_id=locality.id))
     #print(form.region.data)
-    return render_template('add_locality.html', form = form)
+    return render_template('add_locality.html', form = form, locality_id = locality.id)
 
 
 @app.route('/localities/<int:locality_id>/delete', methods=['GET', 'POST'])

@@ -1,39 +1,78 @@
 {% extends "layout.html" %}
 {% block body %}
-    {%  if session.logged_in %}
-        <div class="createLink">
-            <a href="{{url_for('add_station', locality=locality.id)}}" >+ Додати автостанцію/зупинку</a>
-        </div>
-    {% endif %}
-	<h2>{{ locality.name }} </h2>
-    [<a href="{{ url_for('edit_locality', locality_id=locality.id) }}">Редагувати</a>]
-    [<a href="{{ url_for('delete_locality', locality_id=locality.id) }}">Видалити</a>]
-    <h3>[{{ locality.coordinate_lat }}, {{ locality.coordinate_lon }}] ( <a href="http://wikimapia.org/#lang=uk&lat={{ locality.coordinate_lat }}&lon={{ locality.coordinate_lon }}&z=12&m=b">Wikimapia</a>)</h3>
-    <h4>{{ locality.district }} район, {{ locality.region }} область</h4>
-	<h3> Фото розкладів з автостанцій, зупинок: </h3>
-	<ul>
-	{% for station in locality.stations %}
-		<li>
-		{{ station.name }}
-		<ul>
-		{% for photo in station.photo_timetables %}
-			<li>
-				<img width="600px" src="{{photo.url_img_link}}"/>
-				<p>
-					<h4>Коментар:</h4>
-                    <br>
-                </p>
+    <div class="page-header">
+        <h1>
+	        {{ locality.name }}
+            {%  if session.logged_in %}
+	        <a href="{{ url_for("edit_locality", locality_id = locality.id) }}" class="btn btn-primary btn-xs">Редагувати</a>
+            {% endif %}
+	        <br>
+	        <small>{{ locality.region }} область, {{ locality.district }} район
+                <a href="http://wikimapia.org/#lang=uk&lat={{ locality.coordinate_lat }}&lon={{ locality.coordinate_lon }}&z=12&m=b">
+                     <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                </a>
+            </small>
+        </h1>
+    <p>{{ locality.description }}</p>
+    </div>
 
-            </li>
-		{% else %}
-			<li> Фото розкладів відсутні </li>
-		{% endfor %}
-		</ul>
-		</li>
+    <h3>Автостанції, вокзали та зупинки:
+    {%  if session.logged_in %}
+        <a class="btn btn-primary btn-xs" href="{{url_for('add_station', locality=locality.id)}}" >Додати автостанцію/зупинку</a>
+    {% endif %}
+    </h3>
+    {# TODO: Give stations as parameter to template! #}
+    <div class="well">
+        <ul>
+            {% for station in locality.stations %}
+                <li><a href="#locality-station-{{ station.id }}">{{ station.name }}</a></li>
+            {% endfor %}
+
+        </ul>
+    </div>
+
+
+
+
+	{% for station in locality.stations %}
+    <hr>
+    <div class="station-block">
+        <h2> {{ station.name }} <img src="17-512.png" height="22px">
+            <a href="{{ url_for("edit_station", station_id=station.id) }}" class="btn btn-primary btn-xs">Редагувати</a>
+                <br>
+            <small> {{ station.address|default("", true) }}
+                <small>
+                    {% if station.ticket_office %}
+                    <img src="wayfind__passcheck-512.png" height="22px" alt="Квиткова каса">
+                    {% endif %}
+                    {% if station.luggage_storage %}
+                    <img src="1206569153787222375johnny_automatic_Services_7.svg.med.png" height="22px" alt="Камери схову">
+                    {% endif %}
+                    {% if station.toilet %}
+                    <img src="wc-toilet-man-and-woman-icon-38.png" height="22px" alt="Туалет" title="Smiley face">
+                    {% endif %}
+                </small>
+            <br>
+            {{ station.phone_number |default("", true)}}
+            </small>
+        </h2>
+        <div class="row">
+        {% for photo in station.photo_timetables %}
+            <div class="col-xs-6 col-md-3">
+                <a href="{{photo.url_img_link}}" class="thumbnail">
+                    <img src="{{photo.url_img_link}}" alt="Фото розкладу" title="Коментар: {{ photo.author_comment }}">
+                </a>
+            </div>
+        {% else %}
+            Фото розкладів відсутні
+        {% endfor %}
+        </div>
+    </div>
+    <hr>
 	{% else %}
-		<li><em> Автостанції/зупинки відсутні </em></li>
+		Автостанції, вокзали, зупинки - <b>відсутні</b> :(
 	{% endfor %}
-	</ul>
+
 
 	
 {% endblock %}

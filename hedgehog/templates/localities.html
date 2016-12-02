@@ -1,15 +1,16 @@
 {% extends "layout.html" %}
 {% block body %}
     {# TO DO #}
-    {%  if session.logged_in %}
-        <div class="createLink">
-            <a href="{{url_for('add_locality') }}" >+ Додати населений пункт</a>
-        </div>
-    {%  endif %}
+
     {# /TO DO #}
 
     <div class="page-header">
         <h1>Населені пункти <small>Карпатських областей</small></h1>
+        {%  if session.logged_in %}
+
+            <a class="btn btn-primary btn-xs" href="{{url_for('add_locality') }}" >Додати населений пункт</a>
+
+        {%  endif %}
     </div>
 
     <div class="well">

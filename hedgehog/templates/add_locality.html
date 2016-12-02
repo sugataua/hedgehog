@@ -31,8 +31,11 @@
         </div>
 
         <div class="col-md-4 col-md-offset-4">
-            <button type="submit" class="btn btn-default">Зберегти</button>
+            <button type="submit" class="btn btn-primary">Зберегти</button>
         </div>
 	</form>
 </div>
+    {%   if locality_id %}
+     <a class="btn btn-danger" href="{{ url_for('delete_locality', locality_id=locality_id) }}">Видалити</a>
+    {% endif %}
 {% endblock %}

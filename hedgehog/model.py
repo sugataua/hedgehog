@@ -6,10 +6,11 @@ TYPE_STATION = 1
 
 import datetime
 from hedgehog import app
-from flask_sqlalchemy import SQLAlchemy
+from hedgehog import db
+
 from werkzeug.security import generate_password_hash, check_password_hash
 
-db = SQLAlchemy(app)
+
 
 
 class User(db.Model):

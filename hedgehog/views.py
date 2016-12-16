@@ -7,6 +7,9 @@ from hedgehog.model import User, db, Locality, Station, PhotoTimetable
 from hedgehog.forms import RegisterForm, LoginForm, LocalitySearchForm,\
     LocalityCreateForm, StationCreateForm, PhotoTimetableAddForm, LocalityDeleteForm, \
     PhotoTimetableUploadForm
+from hedgehog import login_manager
+from flask_login import login_required
+
 
 # File Uploading
 import os
@@ -14,6 +17,14 @@ from werkzeug.utils import secure_filename
 UPLOAD_FOLDER = app.root_path + "\\" + "static" + "\\" + "images"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+
+
+login_manager.login_view = 'login'
+
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(int(id))
+
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -144,6 +155,7 @@ def show_stations():
 
 
 @app.route('/stations/add', methods=['GET','POST'])
+@login_required
 def add_station():
     form = StationCreateForm()
         
@@ -456,6 +468,7 @@ def old_ogin():
     return render_template('login.html', error=error)
 
 @app.route('/logout')
+@login_required
 def logout():
     session.pop('logged_in', None)
     session.pop('user_id', None)

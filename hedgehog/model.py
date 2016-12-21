@@ -90,6 +90,8 @@ class Station(db.Model):
     name = db.Column(db.Unicode(256), default="зупинка")
     transport_mode = db.Column(db.SmallInteger, default=MODE_BUS)    
     station_type = db.Column(db.SmallInteger, default=TYPE_STOP)
+
+    uz_station_code = db.Column(db.Integer, unique=True)
     
     coordinate_lat = db.Column(db.Float)
     coordinate_lon = db.Column(db.Float)

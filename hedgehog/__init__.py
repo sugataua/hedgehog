@@ -3,7 +3,8 @@ import os
 from flask import Flask
 from hedgehog import configmodule
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
+from flask_script import Manager
+from flask_migrate import Migrate, MigrateCommand
 from flask_login import LoginManager
 
 app = Flask(__name__)
@@ -21,6 +22,7 @@ login_manager.init_app(app)
 app.config.from_object(configmodule.DevelopmentConfig)
 app.config.from_envvar('FLASK_SETTINGS', silent=True)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir,'flask_alchemy.db')
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://' + 'test:test@localhost:3306/hedgehog'
 app.config['SQLALCHEMY_MIGRATE_REPO'] = os.path.join(basedir, 'db_repository')
 
 from hedgehog import db
@@ -29,6 +31,12 @@ from hedgehog import model
 
 migrate = Migrate(app, db)
 
+manager = Manager(app)
+manager.add_command('db', MigrateCommand)
+
+
+if __name__ == '__main__':
+    manager.run()
 
 
 

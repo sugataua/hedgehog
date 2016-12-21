@@ -279,6 +279,11 @@ def show_localities():
     localities = Locality.query.filter_by(deleted=False).filter(Locality.stations.any()).order_by(Locality.name).all()
     return render_template('localities.html', localities = localities)
 
+@app.route('/localities/all')
+def show_all_localities():
+    localities = Locality.query.filter_by(deleted=False).order_by(Locality.name).all()
+    return render_template('localities.html', localities = localities)
+
 @app.route('/localities/add', methods = ['GET','POST'])
 def add_locality():
     form = LocalityCreateForm()

@@ -1,6 +1,9 @@
 {% extends "layout.html" %}
 {% block body %}
+    {% set sort_on = request.args.sort_on|default('name') %}
     {# TO DO #}
+
+
 
     {# /TO DO #}
 
@@ -14,50 +17,51 @@
     </div>
 
     <div class="well">
-        <ul>
-            {% for group_region in localities |groupby('region') %}
-            <li><a href="#region-group-{{ loop.index }}">{{ group_region.grouper }} область</a></li>
-            {% endfor %}
-        </ul>
+        <input type="text" id="filterLocalities" onkeyup="filterLocalities()" placeholder="Search for names..">
     </div>
-
-<hr>
-	{% if localities %}
-		Загальна кількість населених пунктів: {{localities|length}}
-		<br>
-		<br>
+    	{% if localities %}
+		Населених пунктів в системі: {{localities|length}}
 	{% endif %}
+<hr>
 
+{#
     {% for group_region in localities |groupby('region') %}
+
         <h3 id="region-group-{{ loop.index }}">{{ group_region.grouper }} область</h3>
+ #}
         <table class="table table-striped" id="localities_zakarpatta">
             <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Назва</th>
-                    <th>Район</th>
+
+                    <th><a href="?sort_on=name">Назва</a></th>
+                    <th><a href="?sort_on=district">Район</a></th>
+                    <th><a href="?sort_on=region">Область</a></th>
                     <th>Кількість зупинок</th>
                     <th>Кількість фото розкладів</th>
                 </tr>
             </thead>
             <tbody>
 
-            {%  for locality in group_region.list %}
+            {%  for locality in localities |sort(attribute=sort_on)  %}
                 <tr>
-                    <td>{{ loop.index }}</td>
+
                     <td><a href={{url_for('show_locality', locality_id = locality.id)}}>{{locality.name}}</a></td>
                     <td>{{ locality.district }} район</td>
+                    <td>{{ locality.region }} район</td>
                     <td>0</td>
                     <td>-</td>
                 </tr>
+            {% else %}
+		    <h4>Населені пункти відсутні в системі.</h4>
             {%  endfor %}
 
             </tbody>
         </table>
 
-    {% else %}
-		<h4>Населені пункти відсутні в системі.</h4>
-    {% endfor %}
+
+{#
+{% endfor %}
+ #}
 
 
 
@@ -67,5 +71,30 @@
 		<br>
 		<br>
 	{% endif %}
+<script>
+function filterLocalities() {
+    $('#loading').show();
+  // Declare variables
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("filterLocalities");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("localities_zakarpatta");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+    $('#loading').hide();
+}
+</script>
+
 
 {% endblock %}

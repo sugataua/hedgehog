@@ -276,13 +276,14 @@ def page_not_found(error):
     
 @app.route('/localities')
 def show_localities():
-    localities = Locality.query.filter_by(deleted=False).filter(Locality.stations.any()).order_by(Locality.name).all()
+    #localities = Locality.query.filter_by(deleted=False).filter(Locality.stations.any()).order_by(Locality.name).all()
+    localities = Locality.query.filter_by(deleted=False).all() #.order_by(Locality.name)
     return render_template('localities.html', localities = localities)
 
-@app.route('/localities/all')
-def show_all_localities():
-    localities = Locality.query.filter_by(deleted=False).order_by(Locality.name).all()
-    return render_template('localities.html', localities = localities)
+# @app.route('/localities/all')
+# def show_all_localities():
+#     localities = Locality.query.filter_by(deleted=False).order_by(Locality.name).all()
+#     return render_template('localities.html', localities = localities)
 
 @app.route('/localities/add', methods = ['GET','POST'])
 def add_locality():
